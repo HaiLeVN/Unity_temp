@@ -10,6 +10,8 @@ public class diChuyen : MonoBehaviour
     public float traiPhai;
     public bool isFacingRight = true;
     public Animator anim;
+    [SerializeField] AudioSource jumpSound;    
+    
 
     public int doCao;
     void Start()
@@ -43,6 +45,7 @@ public class diChuyen : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(Vector2.up * doCao, ForceMode2D.Impulse);
+            jumpSound.Play();
         }
     }
 }

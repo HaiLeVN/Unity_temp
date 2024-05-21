@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int health = 100;
+    [SerializeField] private int health, maxHealth = 100;
+    [SerializeField] private AudioSource hurtSource;
+    [SerializeField] private Slider slider;
 
     private int MAX_HEALTH = 100;
 
@@ -22,6 +25,11 @@ public class Health : MonoBehaviour
         }
     }
 
+    public void UpdateHealthBar(float currentValue, float maxValue)
+    {
+        slider.value = currentValue / maxValue;
+    }
+
     public void Damage(int amount)
     {
         if (amount < 0)
@@ -29,8 +37,9 @@ public class Health : MonoBehaviour
             throw new System.ArgumentOutOfRangeException("Cannot have negative Damage");
         }
 
+        hurtSource.Play();
         this.health -= amount;
-
+        this.UpdateHealthBar(health, maxHealth);
         if (health <= 0)
         {
             Die();
